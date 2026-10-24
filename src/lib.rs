@@ -5,6 +5,7 @@ pub use gpui_kit_assets as assets;
 pub use gpui_kit_assets::icon_assets;
 pub use gpui_platform::application;
 
+#[cfg(feature = "chat")]
 pub mod chat;
 pub mod forms;
 pub mod icon;
@@ -15,6 +16,10 @@ pub mod settings;
 pub mod theme;
 
 // Submodule aliases for direct path compatibility
+pub mod accordion {
+    pub use crate::primitives::accordion::*;
+}
+#[cfg(feature = "chat")]
 pub mod attachment {
     pub use crate::chat::attachment::*;
 }
@@ -24,6 +29,10 @@ pub mod avatar {
 pub mod badge {
     pub use crate::primitives::badge::*;
 }
+pub mod breadcrumb {
+    pub use crate::primitives::breadcrumb::*;
+}
+#[cfg(feature = "chat")]
 pub mod bubble {
     pub use crate::chat::bubble::*;
 }
@@ -53,14 +62,19 @@ pub mod input {
 pub mod menu {
     pub use crate::overlay::menu::*;
 }
+#[cfg(feature = "chat")]
 pub mod message {
     pub use crate::chat::message::*;
 }
+#[cfg(feature = "chat")]
 pub mod message_scroller {
     pub use crate::chat::message_scroller::*;
 }
 pub mod popover {
     pub use crate::overlay::popover::*;
+}
+pub mod radio {
+    pub use crate::primitives::radio::*;
 }
 pub mod searchable_list {
     pub use crate::primitives::traits::SearchableListItem;
@@ -80,8 +94,14 @@ pub mod sidebar {
 pub mod skeleton {
     pub use crate::primitives::skeleton::*;
 }
+pub mod slider {
+    pub use crate::primitives::slider::*;
+}
 pub mod switch {
     pub use crate::primitives::switch::*;
+}
+pub mod table {
+    pub use crate::primitives::table::*;
 }
 pub mod tabs {
     pub use crate::layout::tabs::*;
@@ -90,6 +110,7 @@ pub mod tooltip {
     pub use crate::overlay::tooltip::*;
 }
 
+#[cfg(feature = "chat")]
 pub use chat::{
     Attachment, AttachmentContent, AttachmentDescription, AttachmentMedia, AttachmentTitle, Bubble,
     BubbleVariant, Message, MessageAlignment, MessageContent, MessageFooter, MessageHeader,
@@ -110,11 +131,14 @@ pub use overlay::{
     SheetSide, SheetTitle, Tooltip, WindowExt,
 };
 pub use primitives::{
-    Avatar, AvatarSize, Badge, BadgeVariant, Button, ButtonSize, ButtonVariant, ButtonVariants,
-    Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle, Checkbox, Disableable,
-    Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyMediaVariant, EmptyTitle, MetricBox,
-    Orientation, PresenceStatus, Progress, SearchableListItem, Selectable, Separator, Side,
-    Sizable, Size, Skeleton, Switch, ThemeMode,
+    Accordion, AccordionContent, AccordionItem, AccordionTrigger, Avatar, AvatarSize, Badge,
+    BadgeVariant, Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage,
+    BreadcrumbSeparator, Button, ButtonGroup, ButtonSize, ButtonVariant, ButtonVariants, Card,
+    CardContent, CardDescription, CardFooter, CardHeader, CardTitle, Checkbox, Disableable, Empty,
+    EmptyDescription, EmptyHeader, EmptyMedia, EmptyMediaVariant, EmptyTitle, MetricBox,
+    Orientation, PresenceStatus, Progress, Radio, RadioGroup, SearchableListItem, Selectable,
+    Separator, Side, Sizable, Size, Skeleton, Slider, Switch, Table, TableBody, TableCaption,
+    TableCell, TableHead, TableHeader, TableRow, ThemeMode,
 };
 pub use settings::{
     NumberFieldOptions, SelectIndex, SettingField, SettingGroup, SettingItem, SettingPage, Settings,

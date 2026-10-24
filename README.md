@@ -9,14 +9,20 @@ A modern shadcn/ui-inspired design system and component library for [GPUI](https
 
 - **shadcn / Luma Design Tokens**: Semantic color tokens with native Light and Dark mode palettes, precise contrast ratios, border radii, and elevation shadows.
 - **Rich Component Library**:
-  - **Primitives**: `Button` (6 variants, 3 sizes, focus rings, loading & dropdown split support), `Avatar`, `Badge`, `Card`, `Checkbox`, `Switch`, `Progress`, `Skeleton`, `Separator`, `MetricBox`, `Empty`.
+  - **Primitives**: `Button` (6 variants, 3 sizes, focus rings, loading & dropdown split support), `Avatar` (generic status indicators & initials), `Badge`, `Card`, `Checkbox`, `Radio` & `RadioGroup`, `Switch`, `Slider`, `Progress`, `Skeleton`, `Separator`, `MetricBox`, `Empty`.
+  - **Data Display**: `Table` (`TableHeader`, `TableBody`, `TableRow`, `TableHead`, `TableCell`, `TableCaption`).
+  - **Navigation**: `Breadcrumb` (`BreadcrumbList`, `BreadcrumbItem`, `BreadcrumbLink`, `BreadcrumbPage`, `BreadcrumbSeparator`), `Tabs`, `Sidebar`, `TitleBar`.
+  - **Disclosure**: `Accordion` (`AccordionItem`, `AccordionTrigger`, `AccordionContent`).
   - **Forms**: `Input`, `Textarea`, `Field`.
-  - **Layout**: `Sidebar`, `Tabs`, `TitleBar`, `ScrollArea`, `ResizablePanel`.
   - **Overlays**: `Dialog`, `AlertDialog`, `Sheet`, `Popover`, `Tooltip`, `Menu` / `DropdownMenu`.
-  - **Chat & Messaging**: `Bubble`, `Message`, `MessageScroller`, `Attachment`.
+  - **Chat & Messaging (`feature = "chat"`, enabled by default)**: `Bubble`, `Message`, `MessageScroller`, `Attachment`.
   - **Settings Engine**: Type-safe settings pages, groups, and inputs.
 - **Accessibility & Keyboard Navigation**: Visible focus rings (`ring` 2px), Tab-stop management, and accessibility labels.
 - **Rem-baseline Scaling**: Controls scale proportionally relative to the application base rem size (14px baseline).
+
+## Cargo Features
+
+- `chat` *(default)*: Includes messaging-specific components (`Bubble`, `MessageScroller`, `Attachment`). Disable default features (`default-features = false`) if you only need the general-purpose desktop UI components.
 
 ## Getting Started
 
@@ -32,7 +38,7 @@ Initialize `lawn-ui` in your GPUI application:
 
 ```rust
 use gpui::*;
-use lawn-ui::{Theme, Button, ButtonVariants, v_flex};
+use lawn_ui::{Theme, Button, ButtonVariants, Table, TableHeader, TableRow, TableHead, TableBody, TableCell, v_flex};
 
 fn main() {
     let app = Application::new();

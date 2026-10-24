@@ -70,13 +70,14 @@ impl From<Pixels> for AvatarSize {
     }
 }
 
-/// A bounded profile image or initials, optionally with a presence indicator.
+/// A bounded profile image or initials, optionally with a presence or status indicator.
 #[derive(IntoElement)]
 pub struct Avatar {
     image: Option<ImageSource>,
     fallback: Option<SharedString>,
     size: AvatarSize,
     presence: Option<PresenceStatus>,
+    status_color: Option<Hsla>,
     style: StyleRefinement,
     children: Vec<AnyElement>,
 }
@@ -88,6 +89,7 @@ impl Avatar {
             fallback: None,
             size: AvatarSize::Md,
             presence: None,
+            status_color: None,
             style: StyleRefinement::default(),
             children: Vec::new(),
         }
@@ -156,6 +158,18 @@ impl Avatar {
         self.size(AvatarSize::Xxl)
     }
 
+    /// Sets an explicit status indicator color on the avatar.
+    pub fn status_color(mut self, color: impl Into<Hsla>) -> Self {
+        self.status_color = Some(color.into());
+        self
+    }
+
+    /// Alias for [`Self::status_color`].
+    pub fn status(self, color: impl Into<Hsla>) -> Self {
+        self.status_color(color)
+    }
+
+    /// Sets the status dot using standard presence semantic states.
     pub fn presence(mut self, status: Option<PresenceStatus>) -> Self {
         self.presence = status;
         self
@@ -310,14 +324,16 @@ impl RenderOnce for Avatar {
             })
             .child(avatar_circle);
 
-        if let Some(presence) = self.presence {
-            let dot_color: Hsla = match presence {
+        let effective_status = self.status_color.or_else(|| {
+            self.presence.map(|presence| match presence {
                 PresenceStatus::Online => theme.presence_online,
                 PresenceStatus::Away => theme.presence_away,
                 PresenceStatus::Busy => theme.presence_busy,
                 PresenceStatus::Offline => theme.presence_offline,
-            };
+            })
+        });
 
+        if let Some(dot_color) = effective_status {
             let dot_size = self.size.resolved_dot_size(window);
 
             container.child(

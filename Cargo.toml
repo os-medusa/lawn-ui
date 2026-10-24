@@ -10,6 +10,10 @@ readme = "README.md"
 keywords = ["gpui", "gui", "ui", "shadcn", "design-system"]
 categories = ["gui"]
 
+[features]
+default = ["chat"]
+chat = []
+
 [dependencies]
 gpui = { package = "gpui-fast", version = "0.1.10", default-features = false, features = ["font-kit", "wayland", "windows-manifest"] }
 gpui-fast-platform = "0.1.10"
