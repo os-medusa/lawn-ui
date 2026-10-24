@@ -19,6 +19,9 @@ pub mod theme;
 pub mod accordion {
     pub use crate::primitives::accordion::*;
 }
+pub mod alert {
+    pub use crate::primitives::alert::*;
+}
 #[cfg(feature = "chat")]
 pub mod attachment {
     pub use crate::chat::attachment::*;
@@ -38,6 +41,9 @@ pub mod bubble {
 }
 pub mod button {
     pub use crate::primitives::button::*;
+}
+pub mod calendar {
+    pub use crate::primitives::calendar::*;
 }
 pub mod card {
     pub use crate::primitives::card::*;
@@ -59,6 +65,9 @@ pub mod input {
     pub use crate::forms::input::*;
     pub use crate::forms::textarea::*;
 }
+pub mod item {
+    pub use crate::primitives::item::*;
+}
 pub mod menu {
     pub use crate::overlay::menu::*;
 }
@@ -70,6 +79,9 @@ pub mod message {
 pub mod message_scroller {
     pub use crate::chat::message_scroller::*;
 }
+pub mod pagination {
+    pub use crate::primitives::pagination::*;
+}
 pub mod popover {
     pub use crate::overlay::popover::*;
 }
@@ -78,6 +90,9 @@ pub mod radio {
 }
 pub mod searchable_list {
     pub use crate::primitives::traits::SearchableListItem;
+}
+pub mod select {
+    pub use crate::forms::select::*;
 }
 pub mod separator {
     pub use crate::primitives::separator::*;
@@ -116,7 +131,7 @@ pub use chat::{
     BubbleVariant, Message, MessageAlignment, MessageContent, MessageFooter, MessageHeader,
     MessageScroller, MessageScrollerState,
 };
-pub use forms::{Field, Input, InputEvent, InputState, Textarea, TextareaState};
+pub use forms::{Field, Input, InputEvent, InputState, Select, SelectItem, Textarea, TextareaState};
 pub use icon::{Icon, IconName, IconNamed, IconSize};
 pub use layout::{
     ResizablePanel, ResizablePanelGroup, ResizeHandle, ResizeHandleContext, ResizeHandleRenderer,
@@ -131,14 +146,15 @@ pub use overlay::{
     SheetSide, SheetTitle, Tooltip, WindowExt,
 };
 pub use primitives::{
-    Accordion, AccordionContent, AccordionItem, AccordionTrigger, Avatar, AvatarSize, Badge,
-    BadgeVariant, Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage,
-    BreadcrumbSeparator, Button, ButtonGroup, ButtonSize, ButtonVariant, ButtonVariants, Card,
-    CardContent, CardDescription, CardFooter, CardHeader, CardTitle, Checkbox, Disableable, Empty,
-    EmptyDescription, EmptyHeader, EmptyMedia, EmptyMediaVariant, EmptyTitle, MetricBox,
-    Orientation, PresenceStatus, Progress, Radio, RadioGroup, SearchableListItem, Selectable,
-    Separator, Side, Sizable, Size, Skeleton, Slider, Switch, Table, TableBody, TableCaption,
-    TableCell, TableHead, TableHeader, TableRow, ThemeMode,
+    Accordion, AccordionContent, AccordionItem, AccordionTrigger, Alert, AlertVariant, Avatar,
+    AvatarSize, Badge, BadgeVariant, Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList,
+    BreadcrumbPage, BreadcrumbSeparator, Button, ButtonGroup, ButtonSize, ButtonVariant,
+    ButtonVariants, Calendar, Card, CardContent, CardDescription, CardFooter, CardHeader,
+    CardTitle, Checkbox, Disableable, Empty, EmptyDescription, EmptyHeader, EmptyMedia,
+    EmptyMediaVariant, EmptyTitle, Item, MetricBox, Orientation, Pagination, PresenceStatus,
+    Progress, Radio, RadioGroup, SearchableListItem, Selectable, Separator, Side, Sizable, Size,
+    Skeleton, Slider, Switch, Table, TableBody, TableCaption, TableCell, TableHead, TableHeader,
+    TableRow, ThemeMode,
 };
 pub use settings::{
     NumberFieldOptions, SelectIndex, SettingField, SettingGroup, SettingItem, SettingPage, Settings,
