@@ -18,7 +18,9 @@ pub mod skeleton;
 pub mod slider;
 pub mod switch;
 pub mod table;
+pub mod toggle;
 pub mod traits;
+pub mod tree;
 
 pub use accordion::{Accordion, AccordionContent, AccordionItem, AccordionTrigger};
 pub use alert::{Alert, AlertVariant};
@@ -43,4 +45,6 @@ pub use skeleton::Skeleton;
 pub use slider::Slider;
 pub use switch::Switch;
 pub use table::{Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow};
+pub use toggle::{Toggle, ToggleGroup, ToggleSize, ToggleVariant};
 pub use traits::{Disableable, SearchableListItem, Selectable, Side, Sizable, Size, ThemeMode};
+pub use tree::{Tree, TreeNode};

@@ -48,6 +48,24 @@ Directly mapped and 100% synchronized with the **FigCraft Luma Neutral Design Sy
 
 ---
 
+## 🚀 Extended Desktop Components (gpui-base Parity)
+
+`lawn-ui` extends the base web components with rich desktop workstation primitives from `gpui-base`:
+
+| # | Component | Module | Features & Variants |
+|---|---|---|---|
+| 29 | **Toast (Sonner)** | `lawn_ui::Toast`, `ToastVariant` | Floating toast notifications with timer, action button, close button, and semantic themes |
+| 30 | **Sheet (Drawer)** | `lawn_ui::Sheet`, `SheetSide` | Off-canvas drawer sliding from `Left`, `Right`, `Top`, or `Bottom` with semi-transparent backdrop |
+| 31 | **Combobox** | `lawn_ui::Combobox`, `ComboboxItem` | Searchable autocomplete select with query filtering and empty state |
+| 32 | **DatePicker** | `lawn_ui::DatePicker` | Input trigger with calendar icon, selected date formatting, and calendar popover |
+| 33 | **NumberInput** | `lawn_ui::NumberInput` | Numeric stepper with decrement/increment controls, min/max bounds, and custom step |
+| 34 | **OtpInput** | `lawn_ui::OtpInput` | Segmented 4-6 digit passcode input boxes with active slot highlighting |
+| 35 | **Toggle & ToggleGroup** | `lawn_ui::Toggle`, `ToggleGroup` | Pressed/unpressed button states with toolbar grouping support |
+| 36 | **Tree** | `lawn_ui::Tree`, `TreeNode` | Hierarchical collapsible tree view with indentation, icons, and branch selection |
+| 37 | **Resizable** | `lawn_ui::ResizablePanelGroup`, `ResizablePanel` | Horizontal and vertical splitters with mouse draggable handles |
+
+---
+
 ## ⚙️ Cargo Features
 
 - `chat` *(default)*: Includes chat & messaging primitives (`Bubble`, `Message`, `MessageScroller`, `Attachment`). To build `lawn-ui` as a lean, general-purpose desktop UI toolkit without messaging components, use:

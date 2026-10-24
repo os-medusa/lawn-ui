@@ -79,6 +79,18 @@ pub mod message {
 pub mod message_scroller {
     pub use crate::chat::message_scroller::*;
 }
+pub mod combobox {
+    pub use crate::forms::combobox::*;
+}
+pub mod date_picker {
+    pub use crate::forms::date_picker::*;
+}
+pub mod number_input {
+    pub use crate::forms::number_input::*;
+}
+pub mod otp_input {
+    pub use crate::forms::otp_input::*;
+}
 pub mod pagination {
     pub use crate::primitives::pagination::*;
 }
@@ -121,8 +133,17 @@ pub mod table {
 pub mod tabs {
     pub use crate::layout::tabs::*;
 }
+pub mod toast {
+    pub use crate::overlay::toast::*;
+}
+pub mod toggle {
+    pub use crate::primitives::toggle::*;
+}
 pub mod tooltip {
     pub use crate::overlay::tooltip::*;
+}
+pub mod tree {
+    pub use crate::primitives::tree::*;
 }
 
 #[cfg(feature = "chat")]
@@ -131,7 +152,10 @@ pub use chat::{
     BubbleVariant, Message, MessageAlignment, MessageContent, MessageFooter, MessageHeader,
     MessageScroller, MessageScrollerState,
 };
-pub use forms::{Field, Input, InputEvent, InputState, Select, SelectItem, Textarea, TextareaState};
+pub use forms::{
+    Combobox, ComboboxItem, DatePicker, Field, Input, InputEvent, InputState, NumberInput,
+    OtpInput, Select, SelectItem, Textarea, TextareaState,
+};
 pub use icon::{Icon, IconName, IconNamed, IconSize};
 pub use layout::{
     ResizablePanel, ResizablePanelGroup, ResizeHandle, ResizeHandleContext, ResizeHandleRenderer,
@@ -143,7 +167,7 @@ pub use overlay::{
     AlertDialog, ContextMenuExt, Dialog, DialogButtonProps, DialogContent, DialogDescription,
     DialogFooter, DialogHeader, DialogTitle, DropdownMenu, Menu, Notification, Popover,
     PopupMenuItem, Root, Sheet, SheetContent, SheetDescription, SheetFooter, SheetHeader,
-    SheetSide, SheetTitle, Tooltip, WindowExt,
+    SheetSide, SheetTitle, Toast, ToastVariant, Tooltip, WindowExt,
 };
 pub use primitives::{
     Accordion, AccordionContent, AccordionItem, AccordionTrigger, Alert, AlertVariant, Avatar,
@@ -154,7 +178,7 @@ pub use primitives::{
     EmptyMediaVariant, EmptyTitle, Item, MetricBox, Orientation, Pagination, PresenceStatus,
     Progress, Radio, RadioGroup, SearchableListItem, Selectable, Separator, Side, Sizable, Size,
     Skeleton, Slider, Switch, Table, TableBody, TableCaption, TableCell, TableHead, TableHeader,
-    TableRow, ThemeMode,
+    TableRow, ThemeMode, Toggle, ToggleGroup, ToggleSize, ToggleVariant, Tree, TreeNode,
 };
 pub use settings::{
     NumberFieldOptions, SelectIndex, SettingField, SettingGroup, SettingItem, SettingPage, Settings,
