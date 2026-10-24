@@ -181,9 +181,9 @@ impl Menu {
             .gap_0p5()
             .min_w(rems(180. / 14.))
             .when_some(min_w, |this, width| this.min_w(width))
-            .rounded(theme.radius)
+            .rounded(theme.radius_2xl)
             .border_1()
-            .border_color(theme.border)
+            .border_color(theme.card_outline)
             .bg(theme.popover)
             .text_color(theme.popover_foreground)
             .when(theme.shadow, |surface| surface.shadow_md());
@@ -262,7 +262,7 @@ impl Menu {
                 t.accent,
                 t.accent_foreground,
                 t.muted_foreground,
-                t.radius_sm,
+                t.radius_xl,
             )
         };
         let mut command_ix = 0;

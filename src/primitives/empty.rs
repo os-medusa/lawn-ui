@@ -1,5 +1,5 @@
 use gpui::prelude::*;
-use gpui::{AnyElement, App, IntoElement, ParentElement, RenderOnce, Styled, Window, div, px};
+use gpui::{AnyElement, App, IntoElement, ParentElement, RenderOnce, Styled, Window, div, px, rems};
 
 use crate::theme::ActiveTheme;
 
@@ -48,7 +48,9 @@ impl RenderOnce for EmptyMedia {
             .items_center()
             .justify_center()
             .when(is_icon, |this| {
-                this.size_12().rounded_full().bg(theme.muted).border_1().border_color(theme.border)
+                this.size(rems(40. / 14.))
+                    .rounded(theme.radius_2xl)
+                    .bg(theme.secondary)
             })
             .children(self.child)
     }
@@ -80,8 +82,8 @@ impl RenderOnce for EmptyTitle {
     fn render(self, _window: &mut Window, cx: &mut App) -> impl IntoElement {
         let theme = cx.theme();
         div()
-            .text_base()
-            .font_weight(gpui::FontWeight::SEMIBOLD)
+            .text_size(gpui::rems(18. / 14.))
+            .font_weight(gpui::FontWeight::NORMAL)
             .text_color(theme.foreground)
             .children(self.child)
     }
@@ -113,7 +115,7 @@ impl RenderOnce for EmptyDescription {
     fn render(self, _window: &mut Window, cx: &mut App) -> impl IntoElement {
         let theme = cx.theme();
         div()
-            .text_sm()
+            .text_size(gpui::rems(1.))
             .text_color(theme.muted_foreground)
             .max_w(px(320.))
             .text_center()
@@ -185,8 +187,15 @@ impl Empty {
 }
 
 impl RenderOnce for Empty {
-    fn render(self, _window: &mut Window, _cx: &mut App) -> impl IntoElement {
+    fn render(self, _window: &mut Window, cx: &mut App) -> impl IntoElement {
+        let theme = cx.theme();
         div()
+            .p(rems(24. / 14.))
+            .rounded(theme.radius_4xl)
+            .border_1()
+            .border_color(theme.card_outline)
+            .bg(theme.card)
+            .text_color(theme.card_foreground)
             .flex()
             .flex_col()
             .items_center()

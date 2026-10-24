@@ -1,6 +1,6 @@
 use gpui::prelude::FluentBuilder;
 use gpui::{
-    App, ElementId, InteractiveElement, IntoElement, ParentElement, RenderOnce,
+    Refineable, App, ElementId, InteractiveElement, IntoElement, ParentElement, RenderOnce,
     StatefulInteractiveElement, StyleRefinement, Styled, Window, div, px, rems,
 };
 use gpui_base::StyledExt;
@@ -92,14 +92,15 @@ impl RenderOnce for NumberInput {
             .h(rems(36. / 14.))
             .w(px(140.))
             .px_2()
-            .bg(theme.background)
+            .bg(theme.control_fill)
             .border_1()
-            .border_color(theme.border)
-            .rounded(theme.radius_md)
-            .text_sm()
+            .border_color(gpui::transparent_black())
+            .rounded(theme.radius_3xl)
+            .text_size(gpui::rems(1.))
             .when(self.disabled, |this| {
                 this.opacity(0.5).cursor_not_allowed()
             })
+            .map(|mut el| { el.style().refine(&self.style); el })
             // Decrement button
             .child(
                 div()

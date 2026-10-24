@@ -46,8 +46,12 @@ impl RenderOnce for Card {
             .bg(theme.card)
             .text_color(theme.card_foreground)
             .border_1()
-            .border_color(theme.border)
+            .border_color(theme.card_outline)
             .rounded(theme.radius_4xl)
+            .when(theme.shadow, |surface| surface.shadow(vec![
+                gpui::BoxShadow::new(gpui::px(0.), gpui::px(4.), gpui::black().opacity(0.05))
+                    .blur_radius(gpui::px(6.)),
+            ]))
             .map(|mut el| {
                 el.style().refine(&self.style);
                 el
@@ -137,8 +141,8 @@ impl RenderOnce for CardTitle {
     fn render(self, _window: &mut Window, cx: &mut App) -> impl IntoElement {
         let theme = cx.theme();
         div()
-            .font_weight(gpui::FontWeight::SEMIBOLD)
-            .text_base()
+            .font_weight(gpui::FontWeight::NORMAL)
+            .text_size(gpui::rems(16. / 14.))
             .text_color(theme.foreground)
             .map(|mut el| {
                 el.style().refine(&self.style);
@@ -183,7 +187,7 @@ impl RenderOnce for CardDescription {
     fn render(self, _window: &mut Window, cx: &mut App) -> impl IntoElement {
         let theme = cx.theme();
         div()
-            .text_sm()
+            .text_size(gpui::rems(1.))
             .text_color(theme.muted_foreground)
             .map(|mut el| {
                 el.style().refine(&self.style);

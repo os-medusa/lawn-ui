@@ -1,7 +1,7 @@
 use gpui::prelude::FluentBuilder;
 use gpui::{
     App, IntoElement, ParentElement, Refineable, RenderOnce, StyleRefinement, Styled, Window, div,
-    px, relative,
+    relative, rems,
 };
 
 use crate::theme::ActiveTheme;
@@ -35,8 +35,8 @@ impl RenderOnce for Progress {
         div()
             .relative()
             .w_full()
-            .h(px(8.))
-            .bg(theme.secondary)
+            .h(rems(12. / 14.))
+            .bg(theme.muted)
             .rounded(theme.radius_sm)
             .overflow_hidden()
             .map(|mut el| {

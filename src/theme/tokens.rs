@@ -42,6 +42,7 @@ pub struct ThemeColors {
 
     // Luma surface roles, sourced from the FigCraft variable collections.
     pub control_fill: Hsla,
+    pub checkbox_fill: Hsla,
     pub control_hover: Hsla,
     pub item_fill: Hsla,
     pub active_tab: Hsla,
@@ -99,7 +100,7 @@ impl ThemeColors {
             primary_foreground: hsla(0.0, 0.0, 0.98, 1.0),
             secondary: hsla(0.0, 0.0, 0.961, 1.0),
             secondary_foreground: hsla(0.0, 0.0, 0.09, 1.0),
-            secondary_hover: hsla(0.0, 0.0, 0.918, 1.0),
+            secondary_hover: gpui::rgba(0xf5f5f5cc).into(),
 
             muted: hsla(0.0, 0.0, 0.961, 1.0),
             muted_foreground: hsla(0.0, 0.0, 0.451, 1.0),
@@ -120,6 +121,7 @@ impl ThemeColors {
             success_foreground: gpui::rgb(0xfafafa).into(),
 
             control_fill: gpui::rgba(0xe5e5e580).into(),
+            checkbox_fill: gpui::rgba(0xe5e5e5e6).into(),
             control_hover: gpui::rgba(0xe5e5e5b3).into(),
             item_fill: gpui::rgba(0xf5f5f580).into(),
             active_tab: gpui::rgb(0xffffff).into(),
@@ -175,7 +177,7 @@ impl ThemeColors {
             primary_foreground: hsla(0.0, 0.0, 0.09, 1.0),
             secondary: hsla(0.0, 0.0, 0.149, 1.0),
             secondary_foreground: hsla(0.0, 0.0, 0.98, 1.0),
-            secondary_hover: hsla(0.0, 0.0, 0.20, 1.0),
+            secondary_hover: gpui::rgba(0x262626cc).into(),
 
             muted: hsla(0.0, 0.0, 0.149, 1.0),
             muted_foreground: hsla(0.0, 0.0, 0.63, 1.0),
@@ -196,6 +198,7 @@ impl ThemeColors {
             success_foreground: gpui::rgb(0x0a0a0a).into(),
 
             control_fill: gpui::rgba(0xffffff13).into(),
+            checkbox_fill: gpui::rgba(0xffffff22).into(),
             control_hover: gpui::rgba(0xffffff20).into(),
             item_fill: gpui::rgba(0x26262680).into(),
             active_tab: gpui::rgba(0xffffff0b).into(),
@@ -426,6 +429,8 @@ mod tests {
                 ("border", colors.border),
                 ("sidebar", colors.sidebar_background),
                 ("control-fill", colors.control_fill),
+                ("checkbox-fill", colors.checkbox_fill),
+                ("secondary-hover", colors.secondary_hover),
                 ("control-hover", colors.control_hover),
                 ("item-fill", colors.item_fill),
                 ("active-tab", colors.active_tab),

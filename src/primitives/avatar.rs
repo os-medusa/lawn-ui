@@ -295,7 +295,7 @@ impl RenderOnce for Avatar {
                 .size_full()
                 .rounded_full()
                 .overflow_hidden()
-                .bg(theme.muted)
+                .bg(theme.secondary)
                 .child(img(src).size_full().object_fit(gpui::ObjectFit::Cover))
         } else {
             let initials =
@@ -304,8 +304,8 @@ impl RenderOnce for Avatar {
                 .size_full()
                 .rounded_full()
                 .overflow_hidden()
-                .bg(theme.muted)
-                .text_color(theme.muted_foreground)
+                .bg(theme.secondary)
+                .text_color(theme.secondary_foreground)
                 .font_weight(gpui::FontWeight::MEDIUM)
                 .flex()
                 .items_center()

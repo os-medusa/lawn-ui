@@ -69,7 +69,7 @@ impl RenderOnce for BreadcrumbList {
             .flex_wrap()
             .items_center()
             .gap(rems(6. / 14.))
-            .text_sm()
+            .text_size(gpui::rems(1.))
             .text_color(theme.muted_foreground)
             .children(self.children)
     }
@@ -140,7 +140,7 @@ impl RenderOnce for BreadcrumbLink {
 
         let mut el = div()
             .id(id)
-            .text_sm()
+            .text_size(gpui::rems(1.))
             .text_color(theme.muted_foreground)
             .hover(|s| s.text_color(theme.foreground).underline())
             .cursor_pointer();
@@ -171,7 +171,7 @@ impl RenderOnce for BreadcrumbPage {
     fn render(self, _window: &mut Window, cx: &mut App) -> impl IntoElement {
         let theme = cx.theme();
         div()
-            .text_sm()
+            .text_size(gpui::rems(1.))
             .font_normal()
             .text_color(theme.foreground)
             .child(self.label)

@@ -88,7 +88,7 @@ impl RenderOnce for Pagination {
             .flex()
             .items_center()
             .gap(rems(6. / 14.))
-            .text_sm()
+            .text_size(gpui::rems(1.))
             .text_color(theme.foreground);
 
         row.style().refine(&self.style);
@@ -99,7 +99,7 @@ impl RenderOnce for Pagination {
             .id("pagination-prev")
             .h(rems(36. / 14.))
             .px(rems(12. / 14.))
-            .rounded(theme.radius)
+            .rounded(theme.radius_2xl)
             .flex()
             .items_center()
             .gap(rems(4. / 14.))
@@ -133,16 +133,14 @@ impl RenderOnce for Pagination {
             let mut page_btn = div()
                 .id(("pagination-page", p))
                 .size(rems(36. / 14.))
-                .rounded(theme.radius)
+                .rounded(theme.radius_2xl)
                 .flex()
                 .items_center()
                 .justify_center()
-                .text_sm()
+                .text_size(gpui::rems(1.))
                 .font_medium()
                 .when(is_active, |this| {
-                    this.border_1()
-                        .border_color(theme.border)
-                        .bg(theme.background)
+                    this.bg(theme.secondary)
                         .text_color(theme.foreground)
                 })
                 .when(!is_active && !disabled, |this| {
@@ -166,7 +164,7 @@ impl RenderOnce for Pagination {
             .id("pagination-next")
             .h(rems(36. / 14.))
             .px(rems(12. / 14.))
-            .rounded(theme.radius)
+            .rounded(theme.radius_2xl)
             .flex()
             .items_center()
             .gap(rems(4. / 14.))

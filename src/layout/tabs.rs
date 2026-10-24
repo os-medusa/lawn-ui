@@ -95,7 +95,7 @@ impl RenderOnce for TabsList {
             .h(rems(36. / 14.))
             .p_0p5()
             .gap_0p5()
-            .rounded_full()
+            .rounded(theme.radius_2xl)
             .bg(theme.muted)
             .text_color(theme.muted_foreground)
             .map(|mut el| {
@@ -180,11 +180,11 @@ impl RenderOnce for TabsTrigger {
             .items_center()
             .justify_center()
             .gap_1p5()
-            .h_full()
-            .px_3()
-            .rounded_full()
-            .text_sm()
-            .font_weight(gpui::FontWeight::MEDIUM)
+            .h(rems(28. / 14.))
+            .px(rems(12. / 14.))
+            .rounded(theme.radius_xl)
+            .text_size(gpui::rems(1.))
+            .font_weight(gpui::FontWeight::NORMAL)
             .cursor_default()
             .focus_visible(|style| {
                 style.shadow(vec![

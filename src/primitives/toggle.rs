@@ -1,6 +1,6 @@
 use gpui::prelude::FluentBuilder;
 use gpui::{
-    AnyElement, App, ElementId, InteractiveElement, IntoElement, ParentElement,
+    Refineable, AnyElement, App, ElementId, InteractiveElement, IntoElement, ParentElement,
     RenderOnce, StatefulInteractiveElement, StyleRefinement, Styled, Window, div, px, rems,
 };
 use gpui_base::StyledExt;
@@ -141,11 +141,11 @@ impl RenderOnce for Toggle {
             .justify_center()
             .h(height)
             .px(padding)
-            .rounded(theme.radius_md)
+            .rounded(theme.radius_4xl)
             .bg(bg)
             .border_1()
             .border_color(border_color)
-            .text_sm()
+            .text_size(gpui::rems(1.))
             .font_medium()
             .text_color(text_color)
             .when(disabled, |this| this.opacity(0.5).cursor_not_allowed())
@@ -159,6 +159,7 @@ impl RenderOnce for Toggle {
                     })
             })
             .children(self.children)
+            .map(|mut el| { el.style().refine(&self.style); el })
     }
 }
 
@@ -203,8 +204,9 @@ impl RenderOnce for ToggleGroup {
             .items_center()
             .gap_1()
             .p_1()
-            .rounded(theme.radius_md)
+            .rounded(theme.radius_4xl)
             .bg(theme.muted)
             .children(self.children)
+            .map(|mut el| { el.style().refine(&self.style); el })
     }
 }

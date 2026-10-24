@@ -1,6 +1,6 @@
 use gpui::prelude::FluentBuilder;
 use gpui::{
-    App, ElementId, InteractiveElement, IntoElement, ParentElement, RenderOnce,
+    Refineable, App, ElementId, InteractiveElement, IntoElement, ParentElement, RenderOnce,
     SharedString, StyleRefinement, Styled, Window, div, px, rems,
 };
 use std::rc::Rc;
@@ -137,11 +137,11 @@ impl RenderOnce for Combobox {
             .h(rems(36. / 14.))
             .px_3()
             .py_2()
-            .bg(theme.background)
+            .bg(theme.control_fill)
             .border_1()
-            .border_color(theme.border)
-            .rounded(theme.radius_md)
-            .text_sm()
+            .border_color(gpui::transparent_black())
+            .rounded(theme.radius_3xl)
+            .text_size(gpui::rems(1.))
             .when(is_placeholder, |this| {
                 this.text_color(theme.muted_foreground)
             })
@@ -172,5 +172,6 @@ impl RenderOnce for Combobox {
             .w_full()
             .relative()
             .child(trigger)
+            .map(|mut el| { el.style().refine(&self.style); el })
     }
 }

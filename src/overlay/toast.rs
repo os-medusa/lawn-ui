@@ -125,7 +125,7 @@ impl RenderOnce for Toast {
                             .gap_1()
                             .child(
                                 div()
-                                    .text_sm()
+                                    .text_size(gpui::rems(1.))
                                     .font_medium()
                                     .text_color(theme.card_foreground)
                                     .child(self.title),
@@ -133,7 +133,7 @@ impl RenderOnce for Toast {
                             .when_some(self.description, |this, desc| {
                                 this.child(
                                     div()
-                                        .text_xs()
+                                        .text_size(gpui::rems(12. / 14.))
                                         .text_color(theme.muted_foreground)
                                         .child(desc),
                                 )
@@ -149,7 +149,7 @@ impl RenderOnce for Toast {
                         .rounded(theme.radius_sm)
                         .bg(theme.secondary)
                         .hover(|s| s.bg(theme.control_hover))
-                        .text_xs()
+                        .text_size(gpui::rems(12. / 14.))
                         .font_medium()
                         .text_color(theme.secondary_foreground)
                         .cursor_pointer()

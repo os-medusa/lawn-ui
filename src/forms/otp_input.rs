@@ -1,6 +1,6 @@
 use gpui::prelude::FluentBuilder;
 use gpui::{
-    App, ElementId, InteractiveElement, IntoElement, ParentElement, RenderOnce,
+    Refineable, App, ElementId, InteractiveElement, IntoElement, ParentElement, RenderOnce,
     SharedString, StyleRefinement, Styled, Window, div, px,
 };
 use gpui_base::StyledExt;
@@ -86,15 +86,15 @@ impl RenderOnce for OtpInput {
                 .justify_center()
                 .w(px(40.))
                 .h(px(40.))
-                .rounded(theme.radius_md)
-                .bg(theme.background)
+                .rounded(theme.radius_3xl)
+                .bg(theme.control_fill)
                 .border_1()
                 .border_color(if is_active {
                     theme.primary
                 } else {
-                    theme.border
+                    gpui::transparent_black()
                 })
-                .text_lg()
+                .text_size(gpui::rems(18. / 14.))
                 .font_medium()
                 .text_color(theme.foreground)
                 .when(self.disabled, |this| this.opacity(0.5))
@@ -103,6 +103,6 @@ impl RenderOnce for OtpInput {
             row = row.child(slot);
         }
 
-        row
+        row.map(|mut el| { el.style().refine(&self.style); el })
     }
 }

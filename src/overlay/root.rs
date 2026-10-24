@@ -248,7 +248,7 @@ impl GlyphRootLayer {
                                 .when_some(n.title, |this, title| {
                                     this.child(
                                         div()
-                                            .text_sm()
+                                            .text_size(gpui::rems(1.))
                                             .font_weight(gpui::FontWeight::SEMIBOLD)
                                             .text_color(theme.foreground)
                                             .child(title),
@@ -256,7 +256,7 @@ impl GlyphRootLayer {
                                 })
                                 .child(
                                     div()
-                                        .text_xs()
+                                        .text_size(gpui::rems(12. / 14.))
                                         .text_color(theme.muted_foreground)
                                         .child(n.message),
                                 ),
@@ -331,7 +331,7 @@ impl RootPlugin for GlyphRootLayer {
 
     fn style(&self, surface: &mut Stateful<Div>, _window: &mut Window, cx: &mut App) {
         let theme = cx.theme();
-        let mut defaults = div().bg(theme.background).text_color(theme.foreground).text_base();
+        let mut defaults = div().bg(theme.background).text_color(theme.foreground).text_size(gpui::rems(16. / 14.));
         surface.style().refine(defaults.style());
     }
 }
@@ -563,9 +563,9 @@ impl WindowExt for Window {
                         .flex_col()
                         .gap_4()
                         .child(
-                            div().text_lg().font_weight(gpui::FontWeight::SEMIBOLD).child(d_title),
+                            div().text_size(gpui::rems(18. / 14.)).font_weight(gpui::FontWeight::SEMIBOLD).child(d_title),
                         )
-                        .when_some(d_desc, |this, d| this.child(div().text_sm().child(d)))
+                        .when_some(d_desc, |this, d| this.child(div().text_size(gpui::rems(1.)).child(d)))
                         .child(
                             div()
                                 .flex()

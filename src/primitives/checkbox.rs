@@ -96,7 +96,6 @@ impl RenderOnce for Checkbox {
             .items_center()
             .justify_center()
             .rounded(theme.radius_checkbox)
-            .border_1()
             .flex_shrink_0();
 
         if self.checked {
@@ -104,7 +103,7 @@ impl RenderOnce for Checkbox {
                 Icon::new(IconName::Check).size(IconSize::Xs).color(theme.primary_foreground),
             );
         } else {
-            indicator = indicator.bg(theme.background).border_color(theme.border);
+            indicator = indicator.bg(theme.checkbox_fill);
         }
 
         let indicator = indicator.map(|mut el| {

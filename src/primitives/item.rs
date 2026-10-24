@@ -104,7 +104,7 @@ impl RenderOnce for Item {
             .items_center()
             .justify_between()
             .p(rems(16. / 14.))
-            .rounded(theme.radius)
+            .rounded(theme.radius_2xl)
             .border_1()
             .border_color(theme.border)
             .bg(bg_color)
@@ -141,7 +141,7 @@ impl RenderOnce for Item {
         let mut text_col = div().flex().flex_col().gap_0p5().min_w_0().flex_1();
         text_col = text_col.child(
             div()
-                .text_sm()
+                .text_size(gpui::rems(1.))
                 .font_medium()
                 .text_color(theme.foreground)
                 .truncate()
@@ -150,7 +150,7 @@ impl RenderOnce for Item {
         if let Some(desc) = self.description {
             text_col = text_col.child(
                 div()
-                    .text_xs()
+                    .text_size(gpui::rems(12. / 14.))
                     .text_color(theme.muted_foreground)
                     .truncate()
                     .child(desc),

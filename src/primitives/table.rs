@@ -3,7 +3,6 @@ use gpui::{
     AnyElement, App, ElementId, InteractiveElement, IntoElement, ParentElement, RenderOnce,
     SharedString, StyleRefinement, Styled, Window, div, rems,
 };
-use gpui_base::StyledExt;
 use std::rc::Rc;
 
 use crate::theme::ActiveTheme;
@@ -49,7 +48,7 @@ impl RenderOnce for Table {
         let theme = cx.theme();
         let content = div()
             .w_full()
-            .text_sm()
+            .text_size(gpui::rems(12. / 14.))
             .text_color(theme.foreground)
             .flex()
             .flex_col()
@@ -96,7 +95,7 @@ impl RenderOnce for TableHeader {
             .w_full()
             .border_b_1()
             .border_color(theme.border)
-            .bg(theme.muted.opacity(0.3))
+            .bg(theme.item_fill)
             .flex()
             .flex_col()
             .children(self.children)
@@ -194,7 +193,7 @@ impl RenderOnce for TableRow {
             .flex()
             .w_full()
             .items_center()
-            .min_h(rems(40. / 14.))
+            .min_h(rems(48. / 14.))
             .border_b_1()
             .border_color(theme.border)
             .bg(bg_color)
@@ -247,8 +246,8 @@ impl RenderOnce for TableHead {
             .items_center()
             .px(rems(16. / 14.))
             .py(rems(10. / 14.))
-            .text_sm()
-            .font_medium()
+            .text_size(gpui::rems(12. / 14.))
+            .font_weight(gpui::FontWeight::NORMAL)
             .text_color(theme.muted_foreground)
             .when(self.align_right, |this| this.justify_end());
 
@@ -299,7 +298,7 @@ impl RenderOnce for TableCell {
             .items_center()
             .px(rems(16. / 14.))
             .py(rems(10. / 14.))
-            .text_sm()
+            .text_size(gpui::rems(12. / 14.))
             .text_color(theme.foreground)
             .when(self.align_right, |this| this.justify_end());
 
@@ -330,7 +329,7 @@ impl RenderOnce for TableCaption {
         let theme = cx.theme();
         div()
             .mt(rems(12. / 14.))
-            .text_xs()
+            .text_size(gpui::rems(12. / 14.))
             .text_color(theme.muted_foreground)
             .child(self.text)
     }

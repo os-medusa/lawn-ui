@@ -202,7 +202,7 @@ fn collect_tree_node(
         })
         .child(
             div()
-                .text_sm()
+                .text_size(gpui::rems(1.))
                 .font_medium()
                 .child(node.label.clone()),
         );

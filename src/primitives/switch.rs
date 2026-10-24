@@ -75,18 +75,18 @@ impl RenderOnce for Switch {
         let focus_ring = gpui::BoxShadow::new(px(0.), px(0.), theme.ring.opacity(0.24))
             .spread_radius(window.rem_size() * (2. / 14.));
 
-        let thumb = div().size(rems(16. / 14.)).rounded_full().bg(if self.checked {
-            theme.primary_foreground
-        } else {
-            theme.background
-        });
+        let thumb = div()
+            .w(rems(24. / 14.))
+            .h(rems(16. / 14.))
+            .rounded(theme.radius_md)
+            .bg(if self.checked { theme.card } else { gpui::white() });
 
         let mut el = gpui_base::Switch::new(self.id)
             .checked(self.checked)
             .disabled(self.disabled)
-            .w(rems(36. / 14.))
+            .w(rems(44. / 14.))
             .h(rems(20. / 14.))
-            .rounded_full()
+            .rounded(theme.radius_lg)
             .flex()
             .items_center()
             .px(rems(2. / 14.))
@@ -101,7 +101,7 @@ impl RenderOnce for Switch {
         if self.checked {
             el = el.bg(theme.primary).justify_end();
         } else {
-            el = el.bg(theme.input).justify_start();
+            el = el.bg(theme.checkbox_fill).justify_start();
         }
 
         if let Some(label) = self.accessibility_label {

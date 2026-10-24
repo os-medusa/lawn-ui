@@ -180,6 +180,7 @@ impl Theme {
             ThemeAppearance::Dark => gpui_base::ThemeAppearance::Dark,
             ThemeAppearance::Light => gpui_base::ThemeAppearance::Light,
         };
+        base_theme.tokens.typography.sans = "Inter".into();
         base_theme.tokens.colors.background = theme.background;
         base_theme.tokens.colors.foreground = theme.foreground;
         base_theme.tokens.colors.primary = theme.primary;

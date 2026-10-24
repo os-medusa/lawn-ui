@@ -109,10 +109,10 @@ impl RenderOnce for Input {
             .h(h)
             .px(px_padding)
             .gap(rems(8. / 14.))
-            .rounded(theme.radius)
+            .rounded(theme.radius_3xl)
             .border_1()
-            .border_color(theme.border)
-            .bg(theme.background)
+            .border_color(gpui::transparent_black())
+            .bg(theme.control_fill)
             .text_color(theme.foreground)
             .text_size(text_size)
             .when(!self.disabled, |this| {

@@ -82,9 +82,8 @@ impl RenderOnce for Slider {
         };
 
         let bar_color = theme.primary;
-        let track_bg = theme.muted;
-        let thumb_bg = theme.background;
-        let thumb_border = theme.primary;
+        let track_bg = theme.checkbox_fill;
+        let thumb_bg = gpui::white();
 
         let thumb = |position: DefiniteLength, start: bool| {
             SliderThumb::new(&self.state)
@@ -94,10 +93,10 @@ impl RenderOnce for Slider {
                 .when(!self.disabled, |this| {
                     this.absolute()
                         .when(is_horiz, |this| {
-                            this.top(px(-5.)).left(position).ml(-px(8.))
+                            this.top(px(-4.)).left(position).ml(-px(12.))
                         })
                         .when(is_vert, |this| {
-                            this.bottom(position).left(px(-5.)).mb(-px(8.))
+                            this.bottom(position).left(px(-4.)).mb(-px(12.))
                         })
                         .flex()
                         .items_center()
@@ -106,11 +105,10 @@ impl RenderOnce for Slider {
                 })
                 .child(
                     div()
-                        .size(rems(16. / 14.))
-                        .rounded_full()
+                        .w(rems(24. / 14.))
+                        .h(rems(16. / 14.))
+                        .rounded(theme.radius_md)
                         .bg(thumb_bg)
-                        .border_2()
-                        .border_color(thumb_border)
                         .shadow(vec![
                             gpui::BoxShadow::new(px(0.), px(1.), gpui::hsla(0., 0., 0., 0.15))
                                 .blur_radius(px(2.)),
@@ -141,15 +139,15 @@ impl RenderOnce for Slider {
                 SliderTrack::new(&self.state)
                     .axis(axis)
                     .disabled(self.disabled)
-                    .when(is_horiz, |this| this.h(rems(6. / 14.)).w_full())
-                    .when(is_vert, |this| this.w(rems(6. / 14.)).h_full())
+                    .when(is_horiz, |this| this.h(rems(8. / 14.)).w_full())
+                    .when(is_vert, |this| this.w(rems(8. / 14.)).h_full())
                     .relative()
-                    .rounded_full()
+                    .rounded(px(4.))
                     .bg(track_bg)
                     .child(
                         div()
                             .absolute()
-                            .rounded_full()
+                            .rounded(px(4.))
                             .bg(bar_color)
                             .when(is_horiz, |this| {
                                 this.top_0().bottom_0().left(bar_start).right(bar_end)

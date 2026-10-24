@@ -3,7 +3,6 @@ use gpui::{
     AnyElement, App, ElementId, InteractiveElement, IntoElement, ParentElement, RenderOnce,
     SharedString, StyleRefinement, Styled, Window, div, rems,
 };
-use gpui_base::StyledExt;
 use std::rc::Rc;
 
 use crate::icon::{Icon, IconName, IconSize};
@@ -128,7 +127,7 @@ impl RenderOnce for Alert {
         let (border_color, bg_color, text_color, default_icon) = match self.variant {
             AlertVariant::Default => (
                 theme.border,
-                theme.card,
+                gpui::transparent_black(),
                 theme.foreground,
                 IconName::Info,
             ),
@@ -151,8 +150,8 @@ impl RenderOnce for Alert {
                 IconName::TriangleAlert,
             ),
             AlertVariant::Destructive => (
-                theme.destructive.opacity(0.4),
-                theme.card,
+                theme.destructive,
+                gpui::transparent_black(),
                 theme.destructive,
                 IconName::CircleAlert,
             ),
@@ -160,7 +159,7 @@ impl RenderOnce for Alert {
 
         let icon = self.icon.unwrap_or_else(|| {
             Icon::new(default_icon)
-                .size(IconSize::Sm)
+                .size(IconSize::Md)
                 .text_color(text_color)
         });
 
@@ -173,7 +172,7 @@ impl RenderOnce for Alert {
             .items_start()
             .gap(rems(12. / 14.))
             .p(rems(16. / 14.))
-            .rounded(theme.radius)
+            .rounded(theme.radius_2xl)
             .border_1()
             .border_color(border_color)
             .bg(bg_color);
@@ -186,8 +185,8 @@ impl RenderOnce for Alert {
         if let Some(title) = self.title {
             content = content.child(
                 div()
-                    .text_sm()
-                    .font_semibold()
+                    .text_size(gpui::rems(1.))
+                    .font_weight(gpui::FontWeight::NORMAL)
                     .text_color(text_color)
                     .child(title),
             );
@@ -195,7 +194,7 @@ impl RenderOnce for Alert {
         if let Some(desc) = self.description {
             content = content.child(
                 div()
-                    .text_sm()
+                    .text_size(gpui::rems(1.))
                     .text_color(theme.muted_foreground)
                     .child(desc),
             );

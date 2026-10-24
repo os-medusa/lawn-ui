@@ -69,10 +69,10 @@ impl RenderOnce for Dialog {
             .gap_4()
             .w(width)
             .p_6()
-            .rounded(theme.radius_lg)
+            .rounded(theme.radius_4xl)
             .border_1()
-            .border_color(theme.border)
-            .bg(theme.background)
+            .border_color(theme.card_outline)
+            .bg(theme.popover)
             .text_color(theme.foreground)
             .when(theme.shadow, |surface| surface.shadow_lg())
             .map(|mut el| {
@@ -163,8 +163,8 @@ impl RenderOnce for DialogTitle {
     fn render(self, _window: &mut Window, cx: &mut App) -> impl IntoElement {
         let theme = cx.theme();
         div()
-            .text_lg()
-            .font_weight(gpui::FontWeight::SEMIBOLD)
+            .text_size(gpui::rems(18. / 14.))
+            .font_weight(gpui::FontWeight::NORMAL)
             .text_color(theme.foreground)
             .map(|mut el| {
                 el.style().refine(&self.style);
@@ -209,7 +209,7 @@ impl RenderOnce for DialogDescription {
     fn render(self, _window: &mut Window, cx: &mut App) -> impl IntoElement {
         let theme = cx.theme();
         div()
-            .text_sm()
+            .text_size(gpui::rems(1.))
             .text_color(theme.muted_foreground)
             .map(|mut el| {
                 el.style().refine(&self.style);

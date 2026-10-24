@@ -42,7 +42,7 @@ pub use progress::Progress;
 pub use radio::{Radio, RadioGroup};
 pub use separator::{Orientation, Separator};
 pub use skeleton::Skeleton;
-pub use slider::Slider;
+pub use slider::{Slider, SliderState};
 pub use switch::Switch;
 pub use table::{Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow};
 pub use toggle::{Toggle, ToggleGroup, ToggleSize, ToggleVariant};

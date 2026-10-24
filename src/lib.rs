@@ -177,7 +177,7 @@ pub use primitives::{
     CardTitle, Checkbox, Disableable, Empty, EmptyDescription, EmptyHeader, EmptyMedia,
     EmptyMediaVariant, EmptyTitle, Item, MetricBox, Orientation, Pagination, PresenceStatus,
     Progress, Radio, RadioGroup, SearchableListItem, Selectable, Separator, Side, Sizable, Size,
-    Skeleton, Slider, Switch, Table, TableBody, TableCaption, TableCell, TableHead, TableHeader,
+    Skeleton, Slider, SliderState, Switch, Table, TableBody, TableCaption, TableCell, TableHead, TableHeader,
     TableRow, ThemeMode, Toggle, ToggleGroup, ToggleSize, ToggleVariant, Tree, TreeNode,
 };
 pub use settings::{

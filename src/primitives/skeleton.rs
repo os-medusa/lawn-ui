@@ -62,7 +62,7 @@ impl RenderOnce for Skeleton {
         if self.circle {
             el = el.rounded_full();
         } else {
-            el = el.rounded(theme.radius);
+            el = el.rounded(theme.radius_sm);
         }
 
         if let Some(w) = self.width {

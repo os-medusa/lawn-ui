@@ -417,7 +417,7 @@ impl RenderOnce for Button {
             ButtonVariant::Warning => el.bg(theme.warning).text_color(theme.warning_foreground),
             ButtonVariant::Success => el.bg(theme.success).text_color(theme.success_foreground),
             ButtonVariant::Ghost => el.text_color(theme.foreground),
-            ButtonVariant::Link => el.text_color(theme.primary),
+            ButtonVariant::Link => el.text_color(theme.primary).underline(),
         };
 
         el = el
@@ -435,12 +435,18 @@ impl RenderOnce for Button {
             el = el.focus_visible(|style| style.border_color(theme.ring).shadow(vec![focus_ring]));
             el = match self.variant {
                 ButtonVariant::Outline | ButtonVariant::Ghost => el
-                    .hover(|style| style.bg(theme.control_hover))
+                    .hover(|style| style.bg(theme.accent))
                     .active(|style| style.bg(theme.accent)),
                 ButtonVariant::Secondary => el
-                    .hover(|style| style.bg(theme.control_hover))
+                    .hover(|style| style.bg(theme.secondary_hover))
                     .active(|style| style.opacity(0.8)),
                 ButtonVariant::Link => el.hover(|style| style.underline()),
+                ButtonVariant::Default | ButtonVariant::Primary => el
+                    .hover(|style| style.bg(theme.primary.opacity(0.9)))
+                    .active(|style| style.opacity(0.8)),
+                ButtonVariant::Destructive | ButtonVariant::Danger => el
+                    .hover(|style| style.bg(theme.destructive.opacity(0.9)))
+                    .active(|style| style.opacity(0.8)),
                 _ => el.hover(|style| style.opacity(0.9)).active(|style| style.opacity(0.8)),
             };
             if let Some(on_click) = self.on_click {

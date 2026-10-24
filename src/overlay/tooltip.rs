@@ -1,7 +1,7 @@
 use gpui::prelude::FluentBuilder;
 use gpui::{
     AnyElement, AnyView, App, AppContext, Context, IntoElement, ParentElement, Refineable, Render,
-    RenderOnce, SharedString, StyleRefinement, Styled, Window, div,
+    RenderOnce, SharedString, StyleRefinement, Styled, Window, div, rems,
 };
 
 use crate::theme::ActiveTheme;
@@ -47,12 +47,12 @@ impl Render for Tooltip {
         let mut el = div()
             .flex()
             .items_center()
-            .px_3()
-            .py_1()
-            .rounded(theme.radius_sm)
+            .h(rems(32. / 14.))
+            .px(rems(12. / 14.))
+            .rounded(theme.radius_xl)
             .bg(theme.primary)
             .text_color(theme.primary_foreground)
-            .text_xs()
+            .text_size(gpui::rems(12. / 14.))
             .when(theme.shadow, |surface| surface.shadow_md())
             .flex_shrink_0();
 
@@ -74,12 +74,12 @@ impl RenderOnce for Tooltip {
         let mut el = div()
             .flex()
             .items_center()
-            .px_3()
-            .py_1()
-            .rounded(theme.radius_sm)
+            .h(rems(32. / 14.))
+            .px(rems(12. / 14.))
+            .rounded(theme.radius_xl)
             .bg(theme.primary)
             .text_color(theme.primary_foreground)
-            .text_xs()
+            .text_size(gpui::rems(12. / 14.))
             .when(theme.shadow, |surface| surface.shadow_md())
             .flex_shrink_0();
 

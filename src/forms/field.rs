@@ -48,20 +48,20 @@ impl RenderOnce for Field {
             .when_some(self.label, |this, lbl| {
                 this.child(
                     div()
-                        .text_sm()
+                        .text_size(gpui::rems(1.))
                         .font_weight(gpui::FontWeight::MEDIUM)
                         .text_color(theme.foreground)
                         .child(lbl),
                 )
             })
             .when_some(self.description, |this, desc| {
-                this.child(div().text_xs().text_color(theme.muted_foreground).child(desc))
+                this.child(div().text_size(gpui::rems(12. / 14.)).text_color(theme.muted_foreground).child(desc))
             })
             .children(self.child)
             .when_some(self.error, |this, err| {
                 this.child(
                     div()
-                        .text_xs()
+                        .text_size(gpui::rems(12. / 14.))
                         .font_weight(gpui::FontWeight::MEDIUM)
                         .text_color(theme.destructive)
                         .child(err),

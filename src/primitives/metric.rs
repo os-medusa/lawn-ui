@@ -62,7 +62,7 @@ impl RenderOnce for MetricBox {
                     .justify_between()
                     .child(
                         div()
-                            .text_xs()
+                            .text_size(gpui::rems(12. / 14.))
                             .font_weight(gpui::FontWeight::MEDIUM)
                             .text_color(theme.muted_foreground)
                             .child(self.label),
@@ -73,7 +73,7 @@ impl RenderOnce for MetricBox {
             )
             .child(
                 div()
-                    .text_xl()
+                    .text_size(gpui::rems(20. / 14.))
                     .font_weight(gpui::FontWeight::BOLD)
                     .text_color(theme.foreground)
                     .child(self.value),

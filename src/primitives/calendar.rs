@@ -131,7 +131,7 @@ impl RenderOnce for Calendar {
             .id(id)
             .w(rems(320. / 14.))
             .p(rems(16. / 14.))
-            .rounded(theme.radius)
+            .rounded(theme.radius_2xl)
             .border_1()
             .border_color(theme.border)
             .bg(theme.card)
@@ -186,7 +186,7 @@ impl RenderOnce for Calendar {
             .justify_between()
             .child(
                 div()
-                    .text_sm()
+                    .text_size(gpui::rems(1.))
                     .font_semibold()
                     .text_color(theme.foreground)
                     .child(title),
@@ -205,7 +205,7 @@ impl RenderOnce for Calendar {
                     .flex()
                     .items_center()
                     .justify_center()
-                    .text_xs()
+                    .text_size(gpui::rems(12. / 14.))
                     .font_medium()
                     .text_color(theme.muted_foreground)
                     .child(day_name),
@@ -236,7 +236,7 @@ impl RenderOnce for Calendar {
                     .flex()
                     .items_center()
                     .justify_center()
-                    .text_sm()
+                    .text_size(gpui::rems(1.))
                     .cursor_pointer()
                     .when(is_selected, |this| {
                         this.bg(theme.primary).text_color(theme.primary_foreground)

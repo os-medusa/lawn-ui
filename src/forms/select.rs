@@ -128,14 +128,14 @@ impl RenderOnce for Select {
                 .w_full()
                 .h(rems(36. / 14.))
                 .px(rems(12. / 14.))
-                .rounded(theme.radius)
+                .rounded(theme.radius_3xl)
                 .border_1()
-                .border_color(if is_open { theme.ring } else { theme.border })
-                .bg(theme.background)
+                .border_color(if is_open { theme.ring } else { gpui::transparent_black() })
+                .bg(theme.control_fill)
                 .flex()
                 .items_center()
                 .justify_between()
-                .text_sm()
+                .text_size(gpui::rems(1.))
                 .when(is_placeholder, |this| this.text_color(theme.muted_foreground))
                 .when(!is_placeholder, |this| this.text_color(theme.foreground))
                 .when(!disabled, |this| {
@@ -151,7 +151,7 @@ impl RenderOnce for Select {
                 .child(div().truncate().child(selected_label.clone()))
                 .child(
                     Icon::new(IconName::ChevronDown)
-                        .size(IconSize::Xs)
+                        .size(IconSize::Md)
                         .text_color(theme.muted_foreground),
                 )
         };

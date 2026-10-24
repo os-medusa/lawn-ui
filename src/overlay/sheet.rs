@@ -177,7 +177,7 @@ impl RenderOnce for SheetTitle {
     fn render(self, _window: &mut Window, cx: &mut App) -> impl IntoElement {
         let theme = cx.theme();
         div()
-            .text_lg()
+            .text_size(gpui::rems(18. / 14.))
             .font_weight(gpui::FontWeight::SEMIBOLD)
             .text_color(theme.foreground)
             .map(|mut el| {
@@ -223,7 +223,7 @@ impl RenderOnce for SheetDescription {
     fn render(self, _window: &mut Window, cx: &mut App) -> impl IntoElement {
         let theme = cx.theme();
         div()
-            .text_sm()
+            .text_size(gpui::rems(1.))
             .text_color(theme.muted_foreground)
             .map(|mut el| {
                 el.style().refine(&self.style);

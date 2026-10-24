@@ -73,21 +73,18 @@ impl RenderOnce for Radio {
         let mut circle = div()
             .size(rems(16. / 14.))
             .rounded_full()
-            .border_1()
             .flex()
             .items_center()
             .justify_center()
             .flex_shrink_0()
-            .bg(theme.background)
-            .when(!checked, |this| this.border_color(theme.border))
-            .when(checked, |this| this.border_color(theme.primary));
+            .bg(if checked { theme.primary } else { theme.checkbox_fill });
 
         if checked {
             circle = circle.child(
                 div()
-                    .size(rems(8. / 14.))
+                    .size(rems(6. / 14.))
                     .rounded_full()
-                    .bg(theme.primary),
+                    .bg(theme.primary_foreground),
             );
         }
 
@@ -113,7 +110,7 @@ impl RenderOnce for Radio {
             if let Some(label) = self.label {
                 text_col = text_col.child(
                     div()
-                        .text_sm()
+                        .text_size(gpui::rems(1.))
                         .font_medium()
                         .text_color(theme.foreground)
                         .child(label),
@@ -122,7 +119,7 @@ impl RenderOnce for Radio {
             if let Some(desc) = self.description {
                 text_col = text_col.child(
                     div()
-                        .text_xs()
+                        .text_size(gpui::rems(12. / 14.))
                         .text_color(theme.muted_foreground)
                         .child(desc),
                 );

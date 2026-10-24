@@ -1,7 +1,7 @@
 use gpui::prelude::FluentBuilder;
 use gpui::{
     AnyElement, App, ElementId, IntoElement, ParentElement, Refineable, RenderOnce,
-    StyleRefinement, Styled, Window, div,
+    StyleRefinement, Styled, Window, div, rems,
 };
 
 use crate::theme::ActiveTheme;
@@ -102,11 +102,11 @@ impl RenderOnce for Badge {
             .flex()
             .items_center()
             .justify_center()
-            .rounded_full()
-            .px_2()
-            .py_0p5()
-            .text_xs()
-            .font_weight(gpui::FontWeight::SEMIBOLD)
+            .h(rems(22. / 14.))
+            .rounded(theme.radius_3xl)
+            .px(rems(8. / 14.))
+            .text_size(gpui::rems(12. / 14.))
+            .font_weight(gpui::FontWeight::NORMAL)
             .map(|mut el| {
                 el.style().refine(&self.style);
                 el

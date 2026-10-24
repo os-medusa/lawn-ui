@@ -33,8 +33,16 @@ impl Accordion {
 }
 
 impl RenderOnce for Accordion {
-    fn render(self, _window: &mut Window, _cx: &mut App) -> impl IntoElement {
-        div().w_full().flex().flex_col().children(self.children)
+    fn render(self, _window: &mut Window, cx: &mut App) -> impl IntoElement {
+        let theme = cx.theme();
+        div()
+            .w_full()
+            .flex()
+            .flex_col()
+            .rounded(theme.radius_2xl)
+            .bg(theme.item_fill)
+            .overflow_hidden()
+            .children(self.children)
     }
 }
 
@@ -122,7 +130,7 @@ impl RenderOnce for AccordionTrigger {
             .justify_between()
             .py(rems(16. / 14.))
             .font_medium()
-            .text_sm()
+            .text_size(gpui::rems(1.))
             .text_color(theme.foreground)
             .hover(|s| s.underline())
             .cursor_pointer();
@@ -179,7 +187,7 @@ impl RenderOnce for AccordionContent {
             .w_full()
             .pb(rems(16. / 14.))
             .pt(rems(2. / 14.))
-            .text_sm()
+            .text_size(gpui::rems(1.))
             .text_color(theme.muted_foreground)
             .children(self.children)
             .into_any_element()

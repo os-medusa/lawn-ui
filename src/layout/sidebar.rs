@@ -272,7 +272,7 @@ impl RenderOnce for SidebarGroupLabel {
         div()
             .px_2()
             .py_1()
-            .text_xs()
+            .text_size(gpui::rems(12. / 14.))
             .font_weight(gpui::FontWeight::MEDIUM)
             .text_color(theme.muted_foreground)
             .child(self.label)
@@ -351,10 +351,10 @@ impl RenderOnce for SidebarMenuButton {
             .items_center()
             .gap_2()
             .w_full()
-            .h(gpui::rems(32. / 14.))
+            .h(gpui::rems(36. / 14.))
             .px_2()
-            .rounded(theme.radius)
-            .text_sm()
+            .rounded(theme.radius_2xl)
+            .text_size(gpui::rems(1.))
             .cursor_default()
             .focus_visible(|style| {
                 style.shadow(vec![
