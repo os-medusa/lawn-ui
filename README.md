@@ -11,6 +11,8 @@ Directly mapped and 100% synchronized with the **FigCraft Luma Neutral Design Sy
 
 ## 🎨 Design System Components (100% FigCraft Parity)
 
+> 📖 See [Figcraft Visual Parity Specification](docs/FIGCRAFT_VISUAL_PARITY.md) for full geometry, token values, and visual comparison details.
+
 `lawn-ui` implements all **28 core components** defined in FigCraft (`02 · shadcn / Components`):
 
 | # | Component | Module | Features & Variants |
