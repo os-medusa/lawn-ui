@@ -362,14 +362,13 @@ impl RenderOnce for Button {
             .flex()
             .items_center()
             .justify_center()
-            .gap(rems(if is_small { 4. / 14. } else { 8. / 14. }))
-            .rounded(theme.radius)
-            .when(self.pill, |this| this.rounded_full())
+            .gap(rems(6. / 14.))
+            .rounded(if self.pill { px(9999.) } else { theme.radius_4xl })
             .font_weight(gpui::FontWeight::NORMAL)
             .cursor_default()
             .flex_shrink_0();
 
-        // Luma's control scale shares the application's 14 px rem baseline.
+        // Luma control scale directly matching Figcraft (h: 28px/36px/40px, px: 12px, font: 14px)
         el = match self.size {
             ButtonSize::XSmall => {
                 if is_icon_only {
@@ -382,14 +381,14 @@ impl RenderOnce for Button {
                 if is_icon_only {
                     el.size(rems(28. / 14.))
                 } else {
-                    el.h(rems(28. / 14.)).px(rems(12. / 14.)).text_size(rems(12. / 14.))
+                    el.h(rems(28. / 14.)).px(rems(12. / 14.)).text_size(rems(1.))
                 }
             }
             ButtonSize::Large => {
                 if is_icon_only {
                     el.size(rems(40. / 14.))
                 } else {
-                    el.h(rems(40. / 14.)).px(rems(20. / 14.)).text_size(rems(1.))
+                    el.h(rems(40. / 14.)).px(rems(12. / 14.)).text_size(rems(1.))
                 }
             }
             ButtonSize::Icon => el.size(rems(36. / 14.)),
@@ -397,20 +396,20 @@ impl RenderOnce for Button {
                 if is_icon_only {
                     el.size(rems(36. / 14.))
                 } else {
-                    el.h(rems(36. / 14.)).px(rems(16. / 14.)).text_size(rems(1.))
+                    el.h(rems(36. / 14.)).px(rems(12. / 14.)).text_size(rems(1.))
                 }
             }
         };
 
         el = match self.variant {
-            ButtonVariant::Default | ButtonVariant::Outline => el
-                .border_1()
-                .border_color(theme.border)
-                .bg(theme.background)
-                .text_color(theme.foreground),
-            ButtonVariant::Primary => el.bg(theme.primary).text_color(theme.primary_foreground),
+            ButtonVariant::Default | ButtonVariant::Primary => {
+                el.bg(theme.primary).text_color(theme.primary_foreground)
+            }
             ButtonVariant::Secondary => {
                 el.bg(theme.secondary).text_color(theme.secondary_foreground)
+            }
+            ButtonVariant::Outline => {
+                el.border_1().border_color(theme.border).text_color(theme.foreground)
             }
             ButtonVariant::Destructive | ButtonVariant::Danger => {
                 el.bg(theme.destructive).text_color(theme.destructive_foreground)
@@ -435,9 +434,12 @@ impl RenderOnce for Button {
         if !disabled {
             el = el.focus_visible(|style| style.border_color(theme.ring).shadow(vec![focus_ring]));
             el = match self.variant {
-                ButtonVariant::Default | ButtonVariant::Outline | ButtonVariant::Ghost => el
+                ButtonVariant::Outline | ButtonVariant::Ghost => el
                     .hover(|style| style.bg(theme.control_hover))
                     .active(|style| style.bg(theme.accent)),
+                ButtonVariant::Secondary => el
+                    .hover(|style| style.bg(theme.control_hover))
+                    .active(|style| style.opacity(0.8)),
                 ButtonVariant::Link => el.hover(|style| style.underline()),
                 _ => el.hover(|style| style.opacity(0.9)).active(|style| style.opacity(0.8)),
             };
