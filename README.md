@@ -121,6 +121,23 @@ impl Render for AppView {
 
 ---
 
+## 🖥️ Interactive Showcase Application
+
+`lawn-ui` includes a comprehensive desktop showcase application featuring live references and interactive examples of all **37 components**, complete with a real-time Light/Dark theme switcher:
+
+```bash
+cargo run --example showcase
+```
+
+Categories included in the showcase:
+- **Buttons & Actions**: Primary, Secondary, Outline, Ghost, Destructive, Link, Sizing (28px/36px/40px), Toggle, and ToggleGroup.
+- **Form Controls**: Input, NumberInput stepper, OtpInput passcode cells, Combobox, DatePicker, Select, Checkbox, Switch, and RadioGroup.
+- **Surfaces & Overlays**: Cards, Item list rows, Alert banners, and Sonner-style Toast notifications.
+- **Navigation & Data**: Tabs, Breadcrumbs, Table data grids, Tree folder/file explorer, Calendar month grid, and Accordions.
+- **Feedback & Indicators**: Avatars with presence status, semantic Badges, Skeletons, and Empty states.
+
+---
+
 ## 📄 License
 
 Licensed under either of:
