@@ -1,7 +1,7 @@
 use gpui::prelude::*;
 use gpui::{
-    App, ElementId, InteractiveElement, IntoElement, ParentElement, RenderOnce,
-    SharedString, StyleRefinement, Styled, Window, div, px, rems,
+    App, ElementId, InteractiveElement, IntoElement, ParentElement, RenderOnce, SharedString,
+    StyleRefinement, Styled, Window, div, px, rems,
 };
 use std::rc::Rc;
 
@@ -40,6 +40,7 @@ pub struct Select {
     selected_value: Option<SharedString>,
     items: Vec<SelectItem>,
     disabled: bool,
+    accessibility_label: Option<SharedString>,
     style: StyleRefinement,
     on_change: Option<Rc<dyn Fn(SharedString, &mut Window, &mut App) + 'static>>,
 }
@@ -52,6 +53,7 @@ impl Select {
             selected_value: None,
             items: Vec::new(),
             disabled: false,
+            accessibility_label: None,
             style: StyleRefinement::default(),
             on_change: None,
         }
@@ -89,6 +91,12 @@ impl Select {
         self.on_change = Some(Rc::new(handler));
         self
     }
+
+    /// Names the field independently of the currently selected option.
+    pub fn accessibility_label(mut self, label: impl Into<SharedString>) -> Self {
+        self.accessibility_label = Some(label.into());
+        self
+    }
 }
 
 impl Styled for Select {
@@ -117,38 +125,63 @@ impl RenderOnce for Select {
         let on_change = self.on_change.clone();
         let items = self.items.clone();
         let style = self.style.clone();
+        let accessibility_label = self.accessibility_label.clone();
+        let selected_value = self.selected_value.clone();
+        let option_namespace = self.id.clone();
 
         let render_trigger = move |is_open: bool, window: &Window, cx: &App| {
             let theme = cx.theme();
             let focus_ring = gpui::BoxShadow::new(px(0.), px(0.), theme.ring.opacity(0.24))
                 .spread_radius(window.rem_size() * (2. / 14.));
 
-            let mut trigger = div()
-                .id(select_id.clone())
+            let mut trigger = gpui_base::Button::new(select_id.clone())
+                .role(gpui::Role::ComboBox)
+                .accessibility_label(
+                    accessibility_label
+                        .clone()
+                        .unwrap_or_else(|| selected_label.clone()),
+                )
+                .aria_value(selected_label.clone())
+                .aria_expanded(is_open)
+                .disabled(disabled)
                 .w_full()
+                .min_w_0()
                 .h(rems(36. / 14.))
                 .px(rems(12. / 14.))
                 .rounded(theme.radius_3xl)
                 .border_1()
-                .border_color(if is_open { theme.ring } else { gpui::transparent_black() })
+                .border_color(if is_open {
+                    theme.ring
+                } else {
+                    gpui::transparent_black()
+                })
                 .bg(theme.control_fill)
                 .flex()
                 .items_center()
                 .justify_between()
+                .gap_2()
+                .cursor_default()
                 .text_size(gpui::rems(1.))
-                .when(is_placeholder, |this| this.text_color(theme.muted_foreground))
+                .when(is_placeholder, |this| {
+                    this.text_color(theme.muted_foreground)
+                })
                 .when(!is_placeholder, |this| this.text_color(theme.foreground))
                 .when(!disabled, |this| {
-                    this.cursor_pointer()
-                        .hover(|s| s.bg(theme.control_hover))
+                    this.hover(|s| s.bg(theme.control_hover))
                         .focus_visible(|s| s.border_color(theme.ring).shadow(vec![focus_ring]))
                 })
-                .when(disabled, |this| this.opacity(0.5).cursor_not_allowed());
+                .when(disabled, |this| this.opacity(0.5));
 
             trigger.style().refine(&style);
 
             trigger
-                .child(div().truncate().child(selected_label.clone()))
+                .child(
+                    div()
+                        .flex_1()
+                        .min_w_0()
+                        .truncate()
+                        .child(selected_label.clone()),
+                )
                 .child(
                     Icon::new(IconName::ChevronDown)
                         .size(IconSize::Md)
@@ -166,7 +199,9 @@ impl RenderOnce for Select {
         gpui_base::Popover::new(popover_id)
             .anchor(gpui::Anchor::TopLeft)
             .offset(window.rem_size() * (4. / 14.))
-            .trigger_with(move |is_open, window, cx| render_trigger(is_open, window, cx).into_any_element())
+            .trigger_with(move |is_open, window, cx| {
+                render_trigger(is_open, window, cx).into_any_element()
+            })
             .content(move |_state, window, cx| {
                 let popover_entity = cx.entity().downgrade();
                 let close_fn = Rc::new(move |window: &mut Window, cx: &mut App| {
@@ -177,11 +212,13 @@ impl RenderOnce for Select {
                     }
                 });
 
-                let mut menu = Menu::new().id(menu_id.clone());
+                let mut menu = Menu::new().id(menu_id.clone()).scrollable(true);
                 for item in &items {
                     let val = item.value.clone();
                     let handler = on_change.clone();
-                    let mut menu_item = PopupMenuItem::new(item.label.clone());
+                    let mut menu_item = PopupMenuItem::new(item.label.clone())
+                        .id(format!("{option_namespace}:option:{}", item.value))
+                        .checked(selected_value.as_ref() == Some(&item.value));
                     if let Some(h) = handler {
                         menu_item = menu_item.on_click(move |_, window, cx| {
                             (h)(val.clone(), window, cx);
@@ -209,5 +246,160 @@ mod tests {
 
         assert_eq!(select.items.len(), 2);
         assert_eq!(select.selected_value.as_deref(), Some("admin"));
+    }
+
+    use crate::{Button, Root};
+    use gpui::{
+        AppContext, Context, Entity, KeyDownEvent, KeyUpEvent, Keystroke, Modifiers, Render,
+        TestAppContext, VisualTestContext, size,
+    };
+    use gpui_base::test_support::{ElementSnapshot, find};
+
+    struct SelectFixture {
+        selected: SharedString,
+        changes: Vec<SharedString>,
+    }
+
+    impl Render for SelectFixture {
+        fn render(&mut self, _: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {
+            let owner = cx.entity().downgrade();
+            div()
+                .size_full()
+                .tab_group()
+                .p_4()
+                .flex()
+                .flex_col()
+                .gap_2()
+                .child(Button::new("before-select").label("Before"))
+                .child(
+                    Select::new("color-scheme")
+                        .accessibility_label("Color scheme")
+                        .selected_value(Some(self.selected.clone()))
+                        .item("red", "Red")
+                        .item("blue", "Blue")
+                        .item("green", "Green")
+                        .on_change(move |value, _, cx| {
+                            owner
+                                .update(cx, |this, cx| {
+                                    this.selected = value.clone();
+                                    this.changes.push(value);
+                                    cx.notify();
+                                })
+                                .unwrap();
+                        }),
+                )
+        }
+    }
+
+    fn render_frame(cx: &mut VisualTestContext) {
+        cx.update(|window, cx| {
+            window.draw(cx).clear(cx);
+            window.simulate_next_frame(cx);
+        });
+        cx.run_until_parked();
+        cx.update(|window, cx| window.draw(cx).clear(cx));
+    }
+
+    fn snapshot(cx: &mut VisualTestContext, id: &str) -> ElementSnapshot {
+        render_frame(cx);
+        cx.update(|window, _| {
+            find(window, &[], &ElementId::Name(id.to_owned().into()))
+                .unwrap_or_else(|| panic!("rendered Select control {id:?}"))
+        })
+    }
+
+    fn press(cx: &mut VisualTestContext, key: &str) {
+        let keystroke = Keystroke::parse(key).unwrap();
+        cx.simulate_event(KeyDownEvent {
+            keystroke: keystroke.clone(),
+            is_held: false,
+            prefer_character_input: false,
+        });
+        cx.simulate_event(KeyUpEvent { keystroke });
+        render_frame(cx);
+    }
+
+    #[gpui::test]
+    fn keyboard_selection_and_escape_preserve_controlled_value_and_trigger_focus(
+        cx: &mut TestAppContext,
+    ) {
+        cx.update(crate::init);
+        let mut fixture = None;
+        let (_, cx) = cx.add_window_view(|window, cx| {
+            let view = cx.new(|_| SelectFixture {
+                selected: "blue".into(),
+                changes: Vec::new(),
+            });
+            fixture = Some(view.clone());
+            Root::new(view, window, cx)
+        });
+        let fixture: Entity<SelectFixture> = fixture.unwrap();
+        cx.simulate_resize(size(px(640.), px(480.)));
+        let before = snapshot(cx, "before-select");
+        cx.simulate_click(before.bounds().center(), Modifiers::default());
+        press(cx, "tab");
+        let trigger = snapshot(cx, "color-scheme");
+        assert_eq!(trigger.role(), Some(gpui::Role::ComboBox));
+        assert_eq!(trigger.label(), Some("Color scheme"));
+        assert_eq!(trigger.value(), Some("Blue"));
+        assert_eq!(trigger.focused(), Some(true));
+        assert_eq!(trigger.expanded(), Some(false));
+
+        press(cx, "enter");
+        assert_eq!(snapshot(cx, "color-scheme").expanded(), Some(true));
+        assert_eq!(
+            snapshot(cx, "color-scheme:option:blue").checked(),
+            Some(true)
+        );
+        assert_eq!(
+            snapshot(cx, "color-scheme:option:red").checked(),
+            Some(false)
+        );
+        assert_eq!(
+            snapshot(cx, "color-scheme:option:red").focused(),
+            Some(true)
+        );
+        press(cx, "down");
+        assert_eq!(
+            snapshot(cx, "color-scheme:option:blue").focused(),
+            Some(true)
+        );
+        press(cx, "down");
+        assert_eq!(
+            snapshot(cx, "color-scheme:option:green").focused(),
+            Some(true)
+        );
+        press(cx, "enter");
+        let trigger = snapshot(cx, "color-scheme");
+        assert_eq!(trigger.value(), Some("Green"));
+        assert_eq!(trigger.expanded(), Some(false));
+        assert_eq!(trigger.focused(), Some(true));
+        cx.update(|_, cx| {
+            let fixture = fixture.read(cx);
+            assert_eq!(fixture.selected.as_ref(), "green");
+            assert_eq!(fixture.changes.as_slice(), &[SharedString::from("green")]);
+        });
+
+        press(cx, "space");
+        assert_eq!(snapshot(cx, "color-scheme").expanded(), Some(true));
+        assert_eq!(
+            snapshot(cx, "color-scheme:option:green").checked(),
+            Some(true)
+        );
+        press(cx, "down");
+        press(cx, "escape");
+        let trigger = snapshot(cx, "color-scheme");
+        assert_eq!(trigger.expanded(), Some(false));
+        assert_eq!(trigger.focused(), Some(true));
+        assert_eq!(trigger.value(), Some("Green"));
+        cx.update(|_, cx| {
+            let fixture = fixture.read(cx);
+            assert_eq!(fixture.selected.as_ref(), "green");
+            assert_eq!(
+                fixture.changes.len(),
+                1,
+                "Escape must not commit the focused option"
+            );
+        });
     }
 }
