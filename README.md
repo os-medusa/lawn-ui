@@ -5,11 +5,11 @@
 
 A modern, comprehensive shadcn/ui-inspired design system and component library for [GPUI](https://github.com/zed-industries/zed/tree/main/crates/gpui) on top of `gpui-base` and `gpui-fast`.
 
-Directly mapped and 100% synchronized with the **FigCraft Luma Neutral Design System** specification.
+Styled from the **FigCraft Luma Neutral Design System** specification.
 
 ---
 
-## 🎨 Design System Components (100% FigCraft Parity)
+## 🎨 Design System Components
 
 > 📖 See [Figcraft Visual Parity Specification](docs/FIGCRAFT_VISUAL_PARITY.md) for full geometry, token values, and visual comparison details.
 
@@ -105,8 +105,11 @@ fn main() {
 struct AppView;
 
 impl Render for AppView {
-    fn render(&mut self, _window: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {
+    fn render(&mut self, window: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {
+        window.set_rem_size(Theme::global(cx).font_size);
         v_flex()
+            .font_family("Inter")
+            .text_size(Theme::global(cx).font_size)
             .size_full()
             .p_8()
             .gap_4()

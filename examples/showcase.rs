@@ -73,6 +73,7 @@ impl ShowcaseApp {
 
 impl Render for ShowcaseApp {
     fn render(&mut self, window: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {
+        window.set_rem_size(cx.theme().font_size);
         let theme = cx.theme();
         let current_tab = self.current_tab;
 
@@ -80,6 +81,8 @@ impl Render for ShowcaseApp {
             .flex()
             .flex_col()
             .size_full()
+            .font_family("Inter")
+            .text_size(theme.font_size)
             .bg(theme.background)
             .text_color(theme.foreground)
             // Top Navigation Bar
