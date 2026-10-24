@@ -1,0 +1,137 @@
+pub use gpui;
+pub use gpui_base as base;
+pub use gpui_base::StyledExt;
+pub use gpui_kit_assets as assets;
+pub use gpui_kit_assets::icon_assets;
+pub use gpui_platform::application;
+
+pub mod chat;
+pub mod forms;
+pub mod icon;
+pub mod layout;
+pub mod overlay;
+pub mod primitives;
+pub mod settings;
+pub mod theme;
+
+// Submodule aliases for direct path compatibility
+pub mod attachment {
+    pub use crate::chat::attachment::*;
+}
+pub mod avatar {
+    pub use crate::primitives::avatar::*;
+}
+pub mod badge {
+    pub use crate::primitives::badge::*;
+}
+pub mod bubble {
+    pub use crate::chat::bubble::*;
+}
+pub mod button {
+    pub use crate::primitives::button::*;
+}
+pub mod card {
+    pub use crate::primitives::card::*;
+}
+pub mod checkbox {
+    pub use crate::primitives::checkbox::*;
+}
+pub mod dialog {
+    pub use crate::overlay::alert_dialog::*;
+    pub use crate::overlay::dialog::*;
+}
+pub mod empty {
+    pub use crate::primitives::empty::*;
+}
+pub mod form {
+    pub use crate::forms::field::*;
+}
+pub mod input {
+    pub use crate::forms::input::*;
+    pub use crate::forms::textarea::*;
+}
+pub mod menu {
+    pub use crate::overlay::menu::*;
+}
+pub mod message {
+    pub use crate::chat::message::*;
+}
+pub mod message_scroller {
+    pub use crate::chat::message_scroller::*;
+}
+pub mod popover {
+    pub use crate::overlay::popover::*;
+}
+pub mod searchable_list {
+    pub use crate::primitives::traits::SearchableListItem;
+}
+pub mod separator {
+    pub use crate::primitives::separator::*;
+}
+pub mod setting {
+    pub use crate::settings::*;
+}
+pub mod sheet {
+    pub use crate::overlay::sheet::*;
+}
+pub mod sidebar {
+    pub use crate::layout::sidebar::*;
+}
+pub mod skeleton {
+    pub use crate::primitives::skeleton::*;
+}
+pub mod switch {
+    pub use crate::primitives::switch::*;
+}
+pub mod tabs {
+    pub use crate::layout::tabs::*;
+}
+pub mod tooltip {
+    pub use crate::overlay::tooltip::*;
+}
+
+pub use chat::{
+    Attachment, AttachmentContent, AttachmentDescription, AttachmentMedia, AttachmentTitle, Bubble,
+    BubbleVariant, Message, MessageAlignment, MessageContent, MessageFooter, MessageHeader,
+    MessageScroller, MessageScrollerState,
+};
+pub use forms::{Field, Input, InputEvent, InputState, Textarea, TextareaState};
+pub use icon::{Icon, IconName, IconNamed, IconSize};
+pub use layout::{
+    ResizablePanel, ResizablePanelGroup, ResizeHandle, ResizeHandleContext, ResizeHandleRenderer,
+    ResizeHandleState, ScrollArea, Sidebar, SidebarContent, SidebarFooter, SidebarGroup,
+    SidebarGroupLabel, SidebarHeader, SidebarMenuButton, Tabs, TabsContent, TabsList, TabsTrigger,
+    TitleBar, center, h_flex, h_resizable, resizable_panel, v_flex, v_resizable,
+};
+pub use overlay::{
+    AlertDialog, ContextMenuExt, Dialog, DialogButtonProps, DialogContent, DialogDescription,
+    DialogFooter, DialogHeader, DialogTitle, DropdownMenu, Menu, Notification, Popover,
+    PopupMenuItem, Root, Sheet, SheetContent, SheetDescription, SheetFooter, SheetHeader,
+    SheetSide, SheetTitle, Tooltip, WindowExt,
+};
+pub use primitives::{
+    Avatar, AvatarSize, Badge, BadgeVariant, Button, ButtonSize, ButtonVariant, ButtonVariants,
+    Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle, Checkbox, Disableable,
+    Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyMediaVariant, EmptyTitle, MetricBox,
+    Orientation, PresenceStatus, Progress, SearchableListItem, Selectable, Separator, Side,
+    Sizable, Size, Skeleton, Switch, ThemeMode,
+};
+pub use settings::{
+    NumberFieldOptions, SelectIndex, SettingField, SettingGroup, SettingItem, SettingPage, Settings,
+};
+pub use theme::{AccentTheme, ActiveTheme, Theme, ThemeAppearance, ThemeColors, ThemeRadius};
+
+/// Initializes `lawn-ui` and the underlying `gpui-base` headless runtime.
+pub fn init(cx: &mut gpui::App) {
+    // 1. Initialize gpui-base headless infrastructure
+    gpui_base::init(cx);
+
+    // 2. Install lawn-ui Theme as Global if not already installed
+    if !cx.has_global::<Theme>() {
+        Theme::set_global(cx, Theme::dark());
+    } else {
+        // 3. Project theme tokens onto gpui-base
+        Theme::sync_base(cx);
+    }
+    overlay::root::init(cx);
+}
