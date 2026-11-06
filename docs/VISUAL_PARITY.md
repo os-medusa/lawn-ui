@@ -1,6 +1,6 @@
-# FigCraft style reference
+# Luma Neutral Visual Parity Specification
 
-Source: `glyph-ui_design_system.figcraft`, page `02 · shadcn / Components`, Luma Neutral Light and Dark. Component nodes are authoritative; the generic shadcn radius scale alone does not describe their appearance.
+Source: Luma Neutral Design System specification (Light and Dark). Component specifications are authoritative; the generic shadcn radius scale alone does not describe their appearance.
 
 ## Typography and application setup
 

@@ -1,7 +1,6 @@
 {
   "source": {
     "document": "glyph-ui_design_system",
-    "transport": "figcraft-cli mcp --attach 4400",
     "date": "2026-10-24"
   },
   "tokens": {

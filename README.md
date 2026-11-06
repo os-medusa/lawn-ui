@@ -5,15 +5,15 @@
 
 A modern, comprehensive shadcn/ui-inspired design system and component library for [GPUI](https://github.com/zed-industries/zed/tree/main/crates/gpui) on top of `gpui-base` and `gpui-fast`.
 
-Styled from the **FigCraft Luma Neutral Design System** specification.
+Styled from the **Luma Neutral Design System** specification.
 
 ---
 
 ## 🎨 Design System Components
 
-> 📖 See [Figcraft Visual Parity Specification](docs/FIGCRAFT_VISUAL_PARITY.md) for full geometry, token values, and visual comparison details.
+> 📖 See [Visual Parity Specification](docs/VISUAL_PARITY.md) for full geometry, token values, and visual comparison details.
 
-`lawn-ui` implements all **28 core components** defined in FigCraft (`02 · shadcn / Components`):
+`lawn-ui` implements all **28 core components** defined in the Luma Neutral specification:
 
 | # | Component | Module | Features & Variants |
 |---|---|---|---|
