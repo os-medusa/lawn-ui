@@ -40,7 +40,7 @@ pub struct ThemeColors {
     pub success: Hsla,
     pub success_foreground: Hsla,
 
-    // Luma surface roles, sourced from the FigCraft variable collections.
+    // Luma surface roles, sourced from variable collections.
     pub control_fill: Hsla,
     pub checkbox_fill: Hsla,
     pub control_hover: Hsla,
@@ -417,7 +417,7 @@ mod tests {
     }
 
     #[test]
-    fn palette_matches_figcraft_variable_snapshot() {
+    fn palette_matches_variable_snapshot() {
         let source: serde_json::Value =
             serde_json::from_str(include_str!("../../design/figcraft-tokens.json")).unwrap();
         for (mode, colors) in [("Light", ThemeColors::light()), ("Dark", ThemeColors::dark())] {

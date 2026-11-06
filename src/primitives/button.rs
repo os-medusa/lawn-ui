@@ -368,7 +368,7 @@ impl RenderOnce for Button {
             .cursor_default()
             .flex_shrink_0();
 
-        // Luma control scale directly matching Figcraft (h: 28px/36px/40px, px: 12px, font: 14px)
+        // Luma control scale (h: 28px/36px/40px, px: 12px, font: 14px)
         el = match self.size {
             ButtonSize::XSmall => {
                 if is_icon_only {

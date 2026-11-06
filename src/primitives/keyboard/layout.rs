@@ -1,4 +1,4 @@
-// Key positions and legends from Figcraft, page 08 · Glyph / Keyboard.
+// Key positions and legends from Keyboard design specification.
 use super::{KeyboardFormat, KeyboardGeometry, KeyboardLanguage};
 
 // Physical code, default legend, left edge, width and height in design pixels.
