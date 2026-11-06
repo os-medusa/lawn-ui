@@ -2,7 +2,7 @@ use std::borrow::Cow;
 
 use gpui::prelude::*;
 use gpui::{
-    App, AssetSource, Bounds, ClickEvent, Context, Entity, IntoElement,
+    App, AssetSource, Bounds, ClickEvent, Context, ElementId, Entity, IntoElement,
     ParentElement, Render, Result, SharedString, Styled, Window, WindowBounds,
     WindowOptions, div, px, rems,
 };
@@ -40,6 +40,7 @@ struct ShowcaseApp {
     switch_checked: bool,
     toggle_pressed: bool,
     selected_date: Option<(u32, u32, u32)>,
+    keyboard_key: SharedString,
     tree_selected: SharedString,
 }
 
@@ -56,6 +57,7 @@ impl ShowcaseApp {
             switch_checked: true,
             toggle_pressed: true,
             selected_date: Some((2026, 10, 24)),
+            keyboard_key: "KeyK".into(),
             tree_selected: "src/lib.rs".into(),
         }
     }
@@ -221,20 +223,18 @@ impl Render for ShowcaseApp {
                     )
                     // Content Canvas (Scrollable)
                     .child(
-                        div()
-                            .flex()
-                            .flex_col()
-                            .flex_1()
-                            .p_8()
-                            .gap_6()
-                            .overflow_hidden()
-                            .child(match current_tab {
-                                ShowcaseTab::Buttons => self.render_buttons_tab(window, cx),
-                                ShowcaseTab::Forms => self.render_forms_tab(window, cx),
-                                ShowcaseTab::Surfaces => self.render_surfaces_tab(window, cx),
-                                ShowcaseTab::Navigation => self.render_navigation_tab(window, cx),
-                                ShowcaseTab::Feedback => self.render_feedback_tab(window, cx),
-                            }),
+                        ScrollArea::new(ElementId::Name(
+                            format!("showcase-content-{:?}", current_tab).into(),
+                        ))
+                        .p_8()
+                        .pb_12()
+                        .child(match current_tab {
+                            ShowcaseTab::Buttons => self.render_buttons_tab(window, cx),
+                            ShowcaseTab::Forms => self.render_forms_tab(window, cx),
+                            ShowcaseTab::Surfaces => self.render_surfaces_tab(window, cx),
+                            ShowcaseTab::Navigation => self.render_navigation_tab(window, cx),
+                            ShowcaseTab::Feedback => self.render_feedback_tab(window, cx),
+                        }),
                     ),
             )
     }
@@ -491,11 +491,25 @@ impl ShowcaseApp {
             )
     }
 
-    fn render_surfaces_tab(&self, _window: &mut Window, _cx: &mut Context<Self>) -> gpui::Div {
+    fn render_surfaces_tab(&self, _window: &mut Window, cx: &mut Context<Self>) -> gpui::Div {
+        let view = cx.weak_entity();
         div()
             .flex()
             .flex_col()
             .gap_6()
+            .child(
+                div().id("keyboard-scroll").overflow_x_scroll().child(
+                    Keyboard::new("showcase-keyboard")
+                        .format(KeyboardFormat::Compact60)
+                        .selected_key(self.keyboard_key.clone())
+                        .on_select(move |code, _, cx| {
+                            let _ = view.update(cx, |this, cx| {
+                                this.keyboard_key = code.into();
+                                cx.notify();
+                            });
+                        }),
+                ),
+            )
             .child(
                 Card::new()
                     .child(
@@ -607,6 +621,7 @@ impl ShowcaseApp {
                                 .flex()
                                 .flex_col()
                                 .gap_4()
+                                .w(px(400.))
                                 .child(
                                     Tabs::new().child(
                                         TabsList::new()

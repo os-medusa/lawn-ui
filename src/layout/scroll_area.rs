@@ -37,6 +37,7 @@ impl RenderOnce for ScrollArea {
             .flex()
             .flex_col()
             .flex_1()
+            .min_h_0()
             .size_full()
             .overflow_y_scroll()
             .map(|mut el| {

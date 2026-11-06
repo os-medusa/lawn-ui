@@ -1,3 +1,4 @@
+use gpui::prelude::*;
 use lawn_ui::*;
 
 #[test]
@@ -45,4 +46,15 @@ fn test_tree() {
     let root = TreeNode::new("src", "src").child(TreeNode::new("lib.rs", "lib.rs"));
     let tree = Tree::new("tree-1").node(root);
     let _ = tree;
+}
+
+#[test]
+fn test_tabs_construction() {
+    let tabs = Tabs::new().child(
+        TabsList::new()
+            .child(TabsTrigger::new("tab-1", "Overview").selected(true))
+            .child(TabsTrigger::new("tab-2", "Billing"))
+            .child(TabsTrigger::new("tab-3", "Settings")),
+    );
+    let _ = tabs;
 }
