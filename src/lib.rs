@@ -68,6 +68,7 @@ pub mod input {
 pub mod item {
     pub use crate::primitives::item::*;
 }
+pub use primitives::keyboard;
 pub mod menu {
     pub use crate::overlay::menu::*;
 }
@@ -175,7 +176,7 @@ pub use primitives::{
     BreadcrumbPage, BreadcrumbSeparator, Button, ButtonGroup, ButtonSize, ButtonVariant,
     ButtonVariants, Calendar, Card, CardContent, CardDescription, CardFooter, CardHeader,
     CardTitle, Checkbox, Disableable, Empty, EmptyDescription, EmptyHeader, EmptyMedia,
-    EmptyMediaVariant, EmptyTitle, Item, MetricBox, Orientation, Pagination, PresenceStatus,
+    EmptyMediaVariant, EmptyTitle, Item, Keyboard, KeyboardFormat, KeyboardGeometry, KeyboardLanguage, MetricBox, Orientation, Pagination, PresenceStatus,
     Progress, Radio, RadioGroup, SearchableListItem, Selectable, Separator, Side, Sizable, Size,
     Skeleton, Slider, SliderState, Switch, Table, TableBody, TableCaption, TableCell, TableHead, TableHeader,
     TableRow, ThemeMode, Toggle, ToggleGroup, ToggleSize, ToggleVariant, Tree, TreeNode,

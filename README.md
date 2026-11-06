@@ -63,6 +63,7 @@ Styled from the **FigCraft Luma Neutral Design System** specification.
 | 35 | **Toggle & ToggleGroup** | `lawn_ui::Toggle`, `ToggleGroup` | Pressed/unpressed button states with toolbar grouping support |
 | 36 | **Tree** | `lawn_ui::Tree`, `TreeNode` | Hierarchical collapsible tree view with indentation, icons, and branch selection |
 | 37 | **Resizable** | `lawn_ui::ResizablePanelGroup`, `ResizablePanel` | Horizontal and vertical splitters with mouse draggable handles |
+| 38 | **Keyboard** | `lawn_ui::Keyboard` | Full, TKL, 75%, 65% and 60% sizes, ANSI/ISO/JIS geometry, English/Russian/German/French/Japanese legends and physical-key selection |
 
 ---
 

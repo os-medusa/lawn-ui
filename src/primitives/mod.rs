@@ -9,6 +9,7 @@ pub mod card;
 pub mod checkbox;
 pub mod empty;
 pub mod item;
+pub mod keyboard;
 pub mod metric;
 pub mod pagination;
 pub mod progress;
@@ -36,6 +37,7 @@ pub use card::{Card, CardContent, CardDescription, CardFooter, CardHeader, CardT
 pub use checkbox::Checkbox;
 pub use empty::{Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyMediaVariant, EmptyTitle};
 pub use item::Item;
+pub use keyboard::{Keyboard, KeyboardFormat, KeyboardGeometry, KeyboardLanguage};
 pub use metric::MetricBox;
 pub use pagination::Pagination;
 pub use progress::Progress;
